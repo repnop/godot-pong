@@ -1,10 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://dylq4oyjnhxup"]
+[gd_scene load_steps=17 format=3 uid="uid://djkdbsdjgbxyo"]
 
-[ext_resource type="Script" path="res://src/Level.gd" id="1_6ou8i"]
-[ext_resource type="Script" path="res://src/Player.gd" id="2_veqbu"]
-[ext_resource type="Script" path="res://src/Player Miss.gd" id="3_8yvne"]
-[ext_resource type="Script" path="res://src/AI Miss.gd" id="3_maxu6"]
-[ext_resource type="Script" path="res://src/Ball.gd" id="4_xmc0r"]
+[ext_resource type="Script" path="res://src/gdscript/Level.gd" id="1_kfo3u"]
+[ext_resource type="Material" uid="uid://bm6hnxui21p4d" path="res://textures/floor.tres" id="2_xwme2"]
+[ext_resource type="Script" path="res://src/gdscript/Player.gd" id="3_sabns"]
+[ext_resource type="Material" uid="uid://0yqmdolfqdur" path="res://textures/paddle.tres" id="4_pu1hm"]
+[ext_resource type="Script" path="res://src/gdscript/Player Miss.gd" id="5_d2bir"]
+[ext_resource type="Script" path="res://src/gdscript/AI Miss.gd" id="6_q6j6m"]
+[ext_resource type="Script" path="res://src/gdscript/Ball.gd" id="7_uag74"]
+[ext_resource type="Material" uid="uid://by0bfstuebfwn" path="res://textures/ball.tres" id="8_fgaha"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_nsu8c"]
 size = Vector3(25, 1, 25)
@@ -29,20 +32,22 @@ size = Vector3(1, 1, 25)
 [sub_resource type="SphereShape3D" id="SphereShape3D_r7idv"]
 
 [node name="Level" type="Node3D"]
-script = ExtResource("1_6ou8i")
+script = ExtResource("1_kfo3u")
 
 [node name="Floor" type="StaticBody3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
 mesh = SubResource("BoxMesh_nsu8c")
+surface_material_override/0 = ExtResource("2_xwme2")
 
 [node name="Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0256729, 0)
-script = ExtResource("2_veqbu")
+script = ExtResource("3_sabns")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.03789, 10.9227)
 mesh = SubResource("BoxMesh_ytks5")
+surface_material_override/0 = ExtResource("4_pu1hm")
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 0.945223, 0.326426, 0, -0.326426, 0.945223, 0, 6.15097, 17.0652)
@@ -56,6 +61,7 @@ shape = SubResource("BoxShape3D_silmh")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="AI"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.03789, -10.5239)
 mesh = SubResource("BoxMesh_ytks5")
+surface_material_override/0 = ExtResource("4_pu1hm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AI"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.03768, -10.5211)
@@ -70,6 +76,7 @@ shape = SubResource("BoxShape3D_03wrv")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Wall 1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.0078, 0.998825, 0)
 mesh = SubResource("BoxMesh_cjv3c")
+surface_material_override/0 = ExtResource("2_xwme2")
 
 [node name="Wall 2" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.0145, 0, 0)
@@ -82,10 +89,11 @@ shape = SubResource("BoxShape3D_03wrv")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.0078, 0.998825, 0)
 mesh = SubResource("BoxMesh_cjv3c")
 skeleton = NodePath("../../Wall 2")
+surface_material_override/0 = ExtResource("2_xwme2")
 
 [node name="Player Miss" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52.0289, 0, 0)
-script = ExtResource("3_8yvne")
+script = ExtResource("5_d2bir")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player Miss"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -52.0306, 1.00184, 13)
@@ -93,7 +101,7 @@ shape = SubResource("BoxShape3D_03wrv")
 
 [node name="AI Miss" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 104.058, 0, 0)
-script = ExtResource("3_maxu6")
+script = ExtResource("6_q6j6m")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AI Miss"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -104.051, 1.00184, -13.0063)
@@ -104,11 +112,12 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10.
 
 [node name="Ball" type="StaticBody3D" parent="."]
 unique_name_in_owner = true
-script = ExtResource("4_xmc0r")
+script = ExtResource("7_uag74")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ball"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("SphereMesh_6sc3m")
+surface_material_override/0 = ExtResource("8_fgaha")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ball"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

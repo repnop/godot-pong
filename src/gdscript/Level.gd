@@ -12,3 +12,7 @@ func _increase_score(player_score_increase: int, ai_score_increase: int):
 	player_score += player_score_increase
 	ai_score += ai_score_increase
 	print("Player: %d, AI: %d" % [player_score, ai_score])
+
+func _process(_delta: float):
+	if Input.is_key_pressed(KEY_R):
+		get_node("Ball").reset_ball.emit()
